@@ -66,5 +66,6 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.set_title(f"{label} Bode")
 
 plt.tight_layout()
-plt.show()
+plt.show() 
+#Väldigt bra jobbat Lo! :)
 
