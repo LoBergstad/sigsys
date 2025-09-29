@@ -67,5 +67,5 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
 
 plt.tight_layout()
 plt.show() 
-#Väldigt bra jobbat Lo! :)
+#Väldigt bra jobbat Lo! :) Snela funka
 
