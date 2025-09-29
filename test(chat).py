@@ -7,8 +7,8 @@ G = R = C = R2 = R3 = 1
 GRC = G / (R * C)
 R2R3 = R2 / R3
 
-GRC = 2000
-R2R3 = 0.3
+GRC = 2000  # 2000
+R2R3 = 1  #0.3
 
 # Numerators and denominator
 num3 = np.array([-1, 0, 0])      # -s**2
@@ -28,7 +28,6 @@ labels = ["H1", "H2", "H3"]
 fig, axes = plt.subplots(3, 3, figsize=(15, 12))
 
 for row, (sys, label) in enumerate(zip(systems, labels)):
-
     # --- Pole-Zero Plot ---
     poles = ct.poles(sys)
     zeros = ct.zeros(sys)
