@@ -9,7 +9,6 @@ R2R3 = R2 / R3
 
 GRC = 2000
 R2R3 = 0.3
-#Test!!!!
 
 # Numerators and denominator
 num3 = np.array([-1, 0, 0])      # -s**2
@@ -67,5 +66,4 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
 
 plt.tight_layout()
 plt.show() 
-#Väldigt bra jobbat Lo! :) Snela funka
 
