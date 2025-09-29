@@ -9,7 +9,7 @@ R2R3 = R2 / R3
 
 GRC = 2000
 R2R3 = 0.3
-
+#Test!!!!
 
 # Numerators and denominator
 num3 = np.array([-1, 0, 0])      # -s**2
