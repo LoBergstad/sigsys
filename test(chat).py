@@ -8,7 +8,7 @@ GRC = G / (R * C)
 R2R3 = R2 / R3
 
 GRC = 2000  # 2000
-R2R3 = 1  #0.3
+R2R3 = 1/3  #0.3
 
 # Numerators and denominator
 num3 = np.array([-1, 0, 0])      # -s**2
@@ -37,6 +37,7 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.set_xlabel("Real")
     ax.set_ylabel("Imag")
     ax.set_title(f"{label} Pole-Zero")
+    ax.set_xlim(-350, 20)
     ax.grid(True, which="both")
     ax.legend()
 
@@ -50,13 +51,14 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.grid(True, which="both")
 
     # --- Bode Plot ---
-    mag, phase, omega = ct.bode(sys, plot=False)
+    mag, phase, omega = ct.frequency_response(sys)
     ax = axes[row, 2]
     ax2 = ax.twinx()
     ax.semilogx(omega, 20*np.log10(mag), 'b')
     ax.set_xlabel("ω [rad/s]")
     ax.set_ylabel("Mag [dB]", color='b')
     ax.tick_params(axis='y', labelcolor='b')
+    ax2.set_ylim(-190, 190)
     ax.grid(True, which="both", ls="--")
     ax2.semilogx(omega, phase*180/np.pi, 'r')
     ax2.set_ylabel("Phase [deg]", color='r')
