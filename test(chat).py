@@ -8,7 +8,7 @@ GRC = G / (R * C)
 R2R3 = R2 / R3
 
 GRC = 2000  # 2000
-R2R3 = 1/3  #0.3
+R2R3 = 2  #0.3
 
 # Numerators and denominator
 num3 = np.array([-1, 0, 0])      # -s**2
@@ -37,7 +37,7 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.set_xlabel("Real")
     ax.set_ylabel("Imag")
     ax.set_title(f"{label} Pole-Zero")
-    ax.set_xlim(-350, 20)
+    ax.set_xlim(np.min(np.real(poles))*1.1, -0.1*np.min(np.real(poles)))
     ax.grid(True, which="both")
     ax.legend()
 
@@ -65,6 +65,7 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax2.tick_params(axis='y', labelcolor='r')
     ax.set_title(f"{label} Bode")
 
-plt.tight_layout()
+fig.suptitle(f'R2/R3 = {R2R3}, G/RC = {GRC}', color = 'r', fontsize = 14)
+plt.tight_layout(rect=[0, 0, 1, 0.99])
 plt.show() 
 
