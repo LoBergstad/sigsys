@@ -2,11 +2,6 @@ import numpy as np
 import control as ct
 import matplotlib.pyplot as plt
 
-
-
-
-
-
 G = R = C = R2 = R3 = 1
 
 GRC = G/(R*C)
