@@ -42,6 +42,7 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.set_xlabel("Real")
     ax.set_ylabel("Imag")
     ax.set_title(f"{label} Pole-Zero")
+    ax.set_xlim(-350, 20)
     ax.grid(True, which="both")
     ax.legend()
 
@@ -56,7 +57,7 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.grid(True, which="both")
 
     # --- Bode Plot ---
-    mag, phase, omega = ct.bode(sys, plot=False)
+    mag, phase, omega = ct.frequency_response(sys)
     ax = axes[row, 2]
     ax2 = ax.twinx()
     line_mag, = ax.semilogx(omega, 20*np.log10(mag), 'b')
@@ -64,6 +65,7 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     bode_mag_lines.append(line_mag)
     bode_phase_lines.append(line_phase)
     ax.set_xlabel("ω [rad/s]")
+    ax2.set_ylim(-190, 190)
     ax.set_ylabel("Mag [dB]", color='b')
     ax.tick_params(axis='y', labelcolor='b')
     ax.grid(True, which="both", ls="--")
