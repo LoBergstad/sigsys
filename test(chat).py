@@ -8,7 +8,7 @@ GRC = G / (R * C)
 R2R3 = R2 / R3
 
 GRC = 2000  # 2000
-R2R3 = 2  #0.3
+R2R3 = 1  #0.3
 
 # Numerators and denominator
 num3 = np.array([-1, 0, 0])      # -s**2
@@ -44,8 +44,8 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     # --- Impulse Response ---
     t, y = ct.impulse_response(sys)
     ax = axes[row, 1]
-    ax.plot(t, y, 'b')  
-    ax.set_xlabel("Time")
+    ax.plot(t*1000, y, 'b')  
+    ax.set_xlabel("Time [ms]")
     ax.set_ylabel("Output")
     ax.set_title(f"{label} Impulse Response")
     ax.grid(True, which="both")
