@@ -7,8 +7,8 @@ G = R = C = R2 = R3 = 1
 GRC = G / (R * C)
 R2R3 = R2 / R3
 
-GRC = 2000  # 2000
-R2R3 = 1  #0.3
+GRC = 1500  # 2000
+R2R3 = 2  #0.3
 
 # Numerators and denominator
 num3 = np.array([-1, 0, 0])      # -s**2
