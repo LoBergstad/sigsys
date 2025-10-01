@@ -6,8 +6,8 @@ import control as ct
 # --- System builder ---
 def make_systems(GRC, R2R3):
     num3 = np.array([-1, 0, 0])      # -s**2
-    num2 = np.array([-GRC, 0])       # -G/(RC)*s
-    num1 = np.array([-GRC**2])       # -(G/(RC))**2
+    num2 = np.array([-GRC, 0])       # -G/(RC)*s #Kommentaren och koden är inte samma uttryck (eller?)?
+    num1 = np.array([-GRC**2])       # -(G/(RC))**2 #Kommentaren och koden är inte samma uttryck (eller?)?
     den  = np.array([1, R2R3*GRC, GRC**2])
     H3 = ct.tf(num3, den)
     H2 = ct.tf(num2, den)
@@ -54,6 +54,8 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.set_ylabel("Output")
     ax.set_title(f"{label} Impulse Response")
     ax.grid(True, which="both")
+    #ax.set_xlim([0, 0.01])     # ev om vi vill ha fast skala (ändra)
+    #ax.set_ylim([-1, 1])       # ev om vi vill ha fast skala (ändra)
 
     # --- Bode Plot ---
     mag, phase, omega = ct.bode(sys, plot=False)
@@ -105,6 +107,14 @@ def update(val):
         bode_mag_lines[row].set_ydata(20*np.log10(mag))
         bode_phase_lines[row].set_xdata(omega)
         bode_phase_lines[row].set_ydata(phase*180/np.pi)
+
+        # Autoscale för varje subplot
+        axes[row,0].relim(); axes[row,0].autoscale()   # pole-zero
+        axes[row,1].relim(); axes[row,1].autoscale()   # impulse
+        axes[row,2].relim(); axes[row,2].autoscale()   # bode magnitude
+        # axes[row,2].right_ax = axes[row,2].twinx()     # om du vill autoskala phase också
+        # men bättre: spara ax2 i en lista och köra relim/autoscale på den också
+
 
     fig.canvas.draw_idle()
 
