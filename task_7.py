@@ -38,4 +38,4 @@ plt.show()
 
 """Förklaring av resultaet:
 Insignalen är en fyrkantsvåg. Vårat lågpassfilter filtrera bort dom höga frekvenserna dvs de svaga termerna i Fourierserien.
-"""
+"Första toppen" blir högre pga (resonans) toppen i vårt LP-filter"""
