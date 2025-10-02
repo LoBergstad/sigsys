@@ -77,3 +77,5 @@ def plot_bode(TransferFunction):
         
 def plot_all():
     None
+
+print(300*2*np.pi)
