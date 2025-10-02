@@ -42,7 +42,7 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.set_xlabel("Real")
     ax.set_ylabel("Imag")
     ax.set_title(f"{label} Pole-Zero")
-    ax.set_xlim(-350, 20)
+    ax.set_xlim(np.min(np.real(poles))*1.1, -0.1*np.min(np.real(poles)))
     ax.grid(True, which="both")
     ax.legend()
 
