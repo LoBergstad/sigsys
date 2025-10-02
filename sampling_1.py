@@ -19,7 +19,7 @@ numerator, denominator = signal.cheby1(3, 3, 8000, analog = True)
 sys = signal.lti(numerator, denominator)
 
 w, mag, phase = signal.bode(sys)
-freq_hz = w/(2*np.pi)
+freq_hz = w/(2*np.pi) #Gör om till vinkelfrekvens
 
 # Rita i samma bild
 fig, ax1 = plt.subplots(figsize=(10, 5))
