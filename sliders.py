@@ -62,6 +62,7 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     mag, phase, omega = ct.frequency_response(sys)
     ax = axes[row, 2]
     ax2 = ax.twinx()
+    ax.axvline(x=1885, color='k', linestyle='--', linewidth=1)
     line_mag, = ax.semilogx(omega, 20*np.log10(mag), 'b')
     line_phase, = ax2.semilogx(omega, phase*180/np.pi, 'r')
     bode_mag_lines.append(line_mag)

@@ -7,8 +7,8 @@ G = R = C = R2 = R3 = 1
 GRC = G / (R * C)
 R2R3 = R2 / R3
 
-GRC = 1500  # 2000
-R2R3 = np.sqrt(2) #0.3
+GRC = 1930  # 2000
+R2R3 = 0.32 #0.3
 
 # Numerators and denominator
 num3 = np.array([-1, 0, 0])      # -s**2
@@ -58,6 +58,8 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.set_xlabel("ω [rad/s]")
     ax.set_ylabel("Mag [dB]", color='b')
     ax.tick_params(axis='y', labelcolor='b')
+    ax.axvline(x=1885, color='k', linestyle='--', linewidth=1)
+    ax.axhline(y=10, color='k', linestyle='--', linewidth=1)
     ax2.set_ylim(-190, 190)
     ax.grid(True, which="both", ls="--")
     ax2.semilogx(omega, phase*180/np.pi, 'r')
