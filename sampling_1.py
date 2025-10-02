@@ -19,8 +19,25 @@ numerator, denominator = signal.cheby1(3, 3, 8000, analog = True)
 sys = signal.lti(numerator, denominator)
 
 w, mag, phase = signal.bode(sys)
-plt.figure()
-plt.semilogx(w, mag, color='red')    # Bode magnitude plot
-plt.semilogx(w, phase)  # Bode phase plot
+freq_hz = w/(2*np.pi)
+
+# Rita i samma bild
+fig, ax1 = plt.subplots(figsize=(10, 5))
+
+color1 = 'tab:red'
+ax1.set_xlabel("Frekvens (Hz)")
+ax1.set_ylabel("Magnitud (dB)", color=color1)
+ax1.semilogx(freq_hz, mag, color=color1, label="Magnitud")
+ax1.tick_params(axis='y', labelcolor=color1)
+ax1.grid(True, which="both", ls="--")
+
+ax2 = ax1.twinx()  # dela x-axeln men ha egen y-axel
+color2 = 'tab:blue'
+ax2.set_ylabel("Fas (grader)", color=color2)
+ax2.semilogx(freq_hz, phase, color=color2, label="Fas")
+ax2.tick_params(axis='y', labelcolor=color2)
+
+fig.tight_layout()
+plt.title("Bode-diagram (Chebyshev I)")
 plt.show()
 
