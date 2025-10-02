@@ -8,4 +8,5 @@ print('Chebichev1-filter, ordning:', parameters[0])
 
 # Behöver ordning 3, ger tillbaka frekvens 8000
 
-#filter = signal.cheby1(3, 3)
+filter = signal.cheby1(3, 3, 8000, analog = True) #Ger överförningsfunktion
+print(filter)
