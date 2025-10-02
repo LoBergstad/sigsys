@@ -20,8 +20,7 @@ sys = signal.lti(numerator, denominator)
 
 w, mag, phase = signal.bode(sys)
 plt.figure()
-plt.semilogx(w, mag)    # Bode magnitude plot
-plt.figure()
+plt.semilogx(w, mag, color='red')    # Bode magnitude plot
 plt.semilogx(w, phase)  # Bode phase plot
 plt.show()
 
