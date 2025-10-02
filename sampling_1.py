@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import signal
 import control as ct
+import matplotlib.pyplot as plt
 
 # --- Värden ---
 f_s = 24000 #Samplefrekvens (hitte på över 16000 enligt Nyqvist)
@@ -12,9 +13,15 @@ parameters = signal.cheb1ord(8000, 11000, 3, g_stop, analog = True) #Beräknar o
 
 #Behöver ordning 3, ger tillbaka frekvens 8000
 
-filter_koeff = signal.cheby1(3, 3, 8000, analog = True)
+numerator, denominator = signal.cheby1(3, 3, 8000, analog = True)
 #print(filter)
 
-H = ct.TransferFunction(filter) #Överförningsfunktionen för filteret. Frekvensdomän.
+sys = signal.lti(numerator, denominator)
 
+w, mag, phase = signal.bode(sys)
+plt.figure()
+plt.semilogx(w, mag)    # Bode magnitude plot
+plt.figure()
+plt.semilogx(w, phase)  # Bode phase plot
+plt.show()
 
