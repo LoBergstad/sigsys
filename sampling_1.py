@@ -9,7 +9,7 @@ g_stop = 20*np.log10(2**(-12)) # Minsta dB reduktionen i stoppbandet, hittar på
 
 
 deg, stop_frequency = signal.cheb1ord(8000, 11000, 3, -g_stop, analog = True) #Beräknar ordnignen som vi behöver på vårat chebichev filter
-#print('Chebichev1-filter, ordning:', parameters[0])
+#print('Chebichev1-filter, ordning:', deg)
 
 #Behöver ordning 3, ger tillbaka frekvens 8000
 
