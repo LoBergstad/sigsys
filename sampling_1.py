@@ -18,10 +18,11 @@ numerator, denominator = signal.cheby1(deg, 3, 8000, analog = True)
 
 sys = signal.lti(numerator, denominator)
 
-# Ska definiera w med större upplösning!
-
-w, mag, phase = signal.bode(sys)
+n = 10**5   #Antal omega för boden
+w_faster = np.linspace(1e+1, 1e+5, n)  #Flera w punkter
+w, mag, phase = signal.bode(sys, w_faster)
 freq_hz = w/(2*np.pi)
+
 
 # Rita i samma bild
 fig, ax1 = plt.subplots(figsize=(10, 5))
