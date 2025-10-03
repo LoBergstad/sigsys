@@ -24,25 +24,20 @@ w, mag, phase = signal.bode(sys, w_faster)
 freq_hz = w/(2*np.pi)
 
 
-# Rita i samma bild
-fig, ax1 = plt.subplots(figsize=(10, 5))
+# Input signals
+frequency_slow = 4*1e+3
+frequency_fast = 40*1e+3
+f_analog = 24*10**5 # Upplösning på 100ggr sample rate
+time_vector = np.linspace(0, 4/frequency_slow, f_analog)  
+time_vector_sample = time_vector[0::int(f_analog/f_s)]
+sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen, 4 perioder
+sin_slow_sample = sin_slow[0::int(f_analog/f_s)]
+sin_fast =  np.sin(frequency_fast*2*np.pi*time_vector)  # Pålagt brus
+sin_fast_sample = sin_fast[0::int(f_analog/f_s)]
 
-color1 = 'tab:red'
-ax1.set_xlabel("Frekvens (Hz)")
-ax1.set_ylabel("Magnitud (dB)", color=color1)
-ax1.semilogx(freq_hz, mag, color=color1, label="Magnitud")
-ax1.tick_params(axis='y', labelcolor=color1)
-ax1.grid(True, which="both", ls="--")
 
-ax2 = ax1.twinx()  # dela x-axeln men ha egen y-axel
-color2 = 'tab:blue'
-ax2.set_ylabel("Fas (grader)", color=color2)
-ax2.semilogx(freq_hz, phase, color=color2, label="Fas")
-ax2.tick_params(axis='y', labelcolor=color2)
+#plt.plot(time_vector, sin_slow)
+plt.scatter(time_vector_sample, sin_slow_sample + sin_fast_sample)
 
-fig.tight_layout()
-plt.title("Bode-diagram (Chebyshev I)")
 plt.show()
-
-
 
