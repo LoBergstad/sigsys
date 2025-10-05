@@ -8,13 +8,9 @@ f_s = 24000 #Samplefrekvens (hitte på över 16000 enligt Nyqvist)
 g_stop = 20*np.log10(2**(-12)) # Minsta dB reduktionen i stoppbandet, hittar på 10
 
 
-deg, stop_frequency = signal.cheb1ord(8000, 11000, 3, -g_stop, analog = True) #Beräknar ordnignen som vi behöver på vårat chebichev filter
-#print('Chebichev1-filter, ordning:', deg)
+deg, stop_frequency = signal.cheb1ord(8000*2*np.pi, 11000*2*np.pi, 3, -g_stop, analog = True) #Beräknar ordnignen som vi behöver på vårat chebichev filter
 
-#Behöver ordning 3, ger tillbaka frekvens 8000
-
-numerator, denominator = signal.cheby1(deg, 3, 8000, analog = True)
-#print(filter)
+numerator, denominator = signal.cheby1(deg, 3, 8000*2*np.pi, analog = True)
 
 sys = signal.lti(numerator, denominator)
 
