@@ -1,5 +1,5 @@
 import numpy as np
-from scipy import signal
+from scipy import signal, fft
 import control as ct
 import matplotlib.pyplot as plt
 
@@ -36,7 +36,29 @@ plt.plot(time_vector, x, label = 'x(t)')    # "Analog" insignal
 #plt.plot(time_vector, sin_fast, label = 'Fast Sine')    # "Analog", brussignalen
 plt.scatter(time_vector_sample, y_sample, label = 'y(t)')   # Samplad utsignal
 plt.legend()
+#plt.show()
+
+
+
+N = len(y_sample)
+Y = fft.fft(y_sample)
+freqs = fft.fftfreq(N, d=1 / f_s)
+
+# Endast positiva frekvenser
+mask = freqs >= 0
+freqs_pos = freqs[mask]
+Y_pos = Y[mask]
+
+# Amplitudspektrum (enkel-sidig)
+amplitude = np.abs(Y_pos)
+
+# --- Plotta amplitudspektrum ---
+plt.figure(figsize=(8, 4))
+plt.plot(freqs_pos, amplitude)
+plt.title("Amplitude Spectrum of Filtered Output")
+plt.xlabel("Frequency [Hz]")
+plt.ylabel("Amplitude")
+plt.grid(True, which="both", ls="--")
+plt.xlim(0, f_s/2)  # upp till Nyquist
 plt.show()
-
-
 
