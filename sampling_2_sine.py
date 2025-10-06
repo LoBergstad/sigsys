@@ -8,7 +8,7 @@ f_s = 24000 #Samplefrekvens (hitte på över 16000 enligt Nyqvist)
 g_stop = 20*np.log10(2**(-12)) # Minsta dB reduktionen i stoppbandet, får fluktuera max 2**(-12) från noll, för om till dB
 
 
-deg, stop_frequency = signal.cheb1ord(8000*2*np.pi, 11000*np.pi, 3, -g_stop, analog = True) #Beräknar ordnignen som vi behöver på vårat chebychev filter
+deg, stop_frequency = signal.cheb1ord(8000*2*np.pi, 11000*2*np.pi, 3, -g_stop, analog = True) #Beräknar ordnignen som vi behöver på vårat chebychev filter
 
 numerator, denominator = signal.cheby1(deg, 3, stop_frequency, analog = True)   # Täljare och nämnare för överföringsfunktionen
 
@@ -16,9 +16,9 @@ sys = signal.lti(numerator, denominator)    # Skapar ett systemobjekt för filtr
 
 # Input signals
 frequency_slow = 4*1e+3 # Frekvens för riktiga signalen
-frequency_fast = 20*1e+3    #Frekvens för brussignalen
+frequency_fast = 11*1e+3    #Frekvens för brussignalen
 f_analog = f_s*100 # Upplösning på 100ggr sample rate, modell av analog signal
-time_vector = np.linspace(0, 4/frequency_slow, f_analog)  # Tidsvektor för fyra perioder av den långsamma signalen
+time_vector = np.linspace(0, 4*1e+2/frequency_slow, f_analog)  # Tidsvektor för fyra perioder av den långsamma signalen
 sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen, 4 perioder
 sin_fast =  np.sin(frequency_fast*2*np.pi*time_vector)  # Pålagt brus
 x = sin_slow + sin_fast     # Total insignal
@@ -40,14 +40,16 @@ plt.legend()
 
 
 
-N = len(y_sample)
-Y = fft.fft(y_sample)
-freqs = fft.fftfreq(N, d=1 / f_s)
 
+#Y = fft.fft(y_sample)                  # Filtrerad signal
+Y = fft.fft(x[0::int(f_analog/f_s)])    # Ej filtrerad signal
+N = len(Y)
+freqs = fft.fftfreq(N, d=1 / f_s)
 # Endast positiva frekvenser
-mask = freqs >= 0
-freqs_pos = freqs[mask]
-Y_pos = Y[mask]
+pos_boolean = freqs >= 0
+freqs_pos = freqs[pos_boolean]
+Y_pos = Y[pos_boolean]
+
 
 # Amplitudspektrum (enkel-sidig)
 amplitude = np.abs(Y_pos)
