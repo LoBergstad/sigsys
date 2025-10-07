@@ -22,7 +22,7 @@ frequency_fast = 11*1e+3    #Frekvens för brussignalen
 f_analog = f_s*100 # Upplösning på 100ggr sample rate, modell av analog signal
 
 #Tidsvektor och grejer
-periods = 4 #Antal perioder
+periods = 10 #Antal perioder
 T_total = periods / frequency_slow
 time_vector = np.linspace(0, T_total, int(T_total * f_analog))  # Tidsvektor för den långsamma signalen
 sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen
@@ -40,7 +40,7 @@ y_sample = y[0::int(f_analog/f_s)]                  # Samplad utsignal, -//-
 plt.plot(time_vector, x, label = 'x(t)')    # "Analog" insignal
 #plt.plot(time_vector, sin_slow, label = 'Slow Sine')    # "Analog", riktiga signalen
 #plt.plot(time_vector, sin_fast, label = 'Fast Sine')    # "Analog", brussignalen
-plt.plot(time_vector, y, label = 'y(t) (ej filtrerad)')   # Samplad utsignal
+#plt.plot(time_vector, y, label = 'y(t) (ej filtrerad)')   # Samplad utsignal
 plt.scatter(time_vector_sample, y_sample, label = 'y(t)')   # Samplad utsignal
 plt.legend()
 #plt.show()
@@ -58,12 +58,13 @@ freqs_pos = freqs[pos_boolean]
 Y_pos = Y[pos_boolean]
 
 
-# Amplitudspektrum (enkel-sidig) och normalisering (*2/N)
-amplitude = np.abs(Y_pos) * 2 / N
+# Amplitudspektrum (enkel-sidig) och normalisering
+y_sample_max = np.max(y_sample) # Signalens max utvärde
+Y_norm = (np.abs(Y_pos)/np.max(Y_pos))*y_sample_max # Största amplituden = största amplituden för sample
 
 # --- Plotta amplitudspektrum ---
 plt.figure(figsize=(8, 4))
-plt.plot(freqs_pos / 1000, amplitude) # /1000 för att få i kHz
+plt.stem(freqs_pos / 1000, Y_norm) # /1000 för att få i kHz
 plt.title("Amplitude Spectrum of Filtered Output")
 plt.xlabel("Frequency [kHz]")
 plt.ylabel("Amplitude")
