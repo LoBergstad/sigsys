@@ -58,8 +58,9 @@ for row, (sys, label) in enumerate(zip(systems, labels)):
     ax.set_xlabel("ω [rad/s]")
     ax.set_ylabel("Mag [dB]", color='b')
     ax.tick_params(axis='y', labelcolor='b')
-    #ax.axvline(x=1885, color='k', linestyle='--', linewidth=1) #För uppgift 6b
-    #ax.axhline(y=10, color='k', linestyle='--', linewidth=1)   # --//--
+    if row == 0:
+        ax.axvline(x=1885, color='k', linestyle='--', linewidth=1) #För uppgift 6b
+        ax.axhline(y=10, color='k', linestyle='--', linewidth=1)   # --//--
     ax2.set_ylim(-190, 190)
     ax.grid(True, which="both", ls="--")
     ax2.semilogx(omega, phase*180/np.pi, 'r')
