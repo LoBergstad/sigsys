@@ -7,8 +7,10 @@ import matplotlib.pyplot as plt
 f_s = 24000 #Samplefrekvens (hitte på över 16000 enligt Nyqvist)
 g_stop = 20*np.log10(2**(-12)) # Minsta dB reduktionen i stoppbandet, får fluktuera max 2**(-12) från noll, för om till dB
 
+W_pass = 8000 * 2 * np.pi  # Passband (8 kHz)
+W_stop = 11000 * 2 * np.pi # Stoppband (11 kHz)
 
-deg, stop_frequency = signal.cheb1ord(8000*2*np.pi, 11000*2*np.pi, 3, -g_stop, analog = True) #Beräknar ordnignen som vi behöver på vårat chebychev filter
+deg, stop_frequency = signal.cheb1ord(W_pass, W_stop, 3, -g_stop, analog = True) #Beräknar ordnignen som vi behöver på vårat chebychev filter
 
 numerator, denominator = signal.cheby1(deg, 3, stop_frequency, analog = True)   # Täljare och nämnare för överföringsfunktionen
 
@@ -18,9 +20,13 @@ sys = signal.lti(numerator, denominator)    # Skapar ett systemobjekt för filtr
 frequency_slow = 4*1e+3 # Frekvens för riktiga signalen
 frequency_fast = 11*1e+3    #Frekvens för brussignalen
 f_analog = f_s*100 # Upplösning på 100ggr sample rate, modell av analog signal
-time_vector = np.linspace(0, 4*1e+2/frequency_slow, f_analog)  # Tidsvektor för fyra perioder av den långsamma signalen
+
+#Tidsvektor och grejer
+periods = 40 #Antal perioder
+T_total = periods / frequency_slow
+time_vector = np.linspace(0, T_total, int(T_total * f_analog))  # Tidsvektor för fyra perioder av den långsamma signalen
 sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen, 4 perioder
-sin_fast =  np.sin(frequency_fast*2*np.pi*time_vector)  # Pålagt brus
+sin_fast = np.sin(frequency_fast*2*np.pi*time_vector)  # Pålagt brus
 x = sin_slow + sin_fast     # Total insignal
 
 t_out, y, _ = signal.lsim(sys, x, time_vector) # Tidsvektor och analog utsignal
@@ -51,16 +57,16 @@ freqs_pos = freqs[pos_boolean]
 Y_pos = Y[pos_boolean]
 
 
-# Amplitudspektrum (enkel-sidig)
-amplitude = np.abs(Y_pos)
+# Amplitudspektrum (enkel-sidig) och normalisering (*2/N)
+amplitude = np.abs(Y_pos) * 2 / N
 
 # --- Plotta amplitudspektrum ---
 plt.figure(figsize=(8, 4))
-plt.plot(freqs_pos, amplitude)
+plt.plot(freqs_pos / 1000, amplitude) # /1000 för att få i kHz
 plt.title("Amplitude Spectrum of Filtered Output")
-plt.xlabel("Frequency [Hz]")
+plt.xlabel("Frequency [kHz]")
 plt.ylabel("Amplitude")
 plt.grid(True, which="both", ls="--")
-plt.xlim(0, f_s/2)  # upp till Nyquist
+plt.xlim(0, f_s/2/1000)  # upp till Nyquist
 plt.show()
 
