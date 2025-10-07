@@ -18,6 +18,7 @@ sys = signal.lti(numerator, denominator)    # Skapar ett systemobjekt för filtr
 frequency_slow = 4*1e+3 # Frekvens för riktiga signalen
 frequency_fast = 11*1e+3    #Frekvens för brussignalen
 f_analog = f_s*100 # Upplösning på 100ggr sample rate, modell av analog signal
+
 time_vector = np.linspace(0, 4*1e+2/frequency_slow, f_analog)  # Tidsvektor för fyra perioder av den långsamma signalen
 sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen, 4 perioder
 sin_fast =  np.sin(frequency_fast*2*np.pi*time_vector)  # Pålagt brus
@@ -41,8 +42,8 @@ plt.legend()
 
 
 
-#Y = fft.fft(y_sample)                  # Filtrerad signal
-Y = fft.fft(x[0::int(f_analog/f_s)])    # Ej filtrerad signal
+Y = fft.fft(y_sample)                  # Filtrerad signal
+#Y = fft.fft(x[0::int(f_analog/f_s)])    # Ej filtrerad signal
 N = len(Y)
 freqs = fft.fftfreq(N, d=1 / f_s)
 # Endast positiva frekvenser
