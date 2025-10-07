@@ -12,18 +12,20 @@ deg, stop_frequency = signal.cheb1ord(8000*2*np.pi, 11000*2*np.pi, 3, -g_stop, a
 
 numerator, denominator = signal.cheby1(deg, 3, stop_frequency, analog = True)   # Täljare och nämnare för överföringsfunktionen
 
-sys = signal.lti(numerator, denominator)    # Skapar ett systemobjekt för filtret
+H = ct.tf(numerator, denominator)
+
 
 # Input signals
 frequency_slow = 4*1e+3 # Frekvens för riktiga signalen
 frequency_fast = 11*1e+3    #Frekvens för brussignalen
 f_analog = f_s*100 # Upplösning på 100ggr sample rate, modell av analog signal
-time_vector = np.linspace(0, 4*1e+2/frequency_slow, f_analog)  # Tidsvektor för fyra perioder av den långsamma signalen
+n_periods = 4*1e+2
+time_vector = np.linspace(0, n_periods/frequency_slow, f_analog)  # Tidsvektor av den långsamma signalen
 sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen, 4 perioder
 sin_fast =  np.sin(frequency_fast*2*np.pi*time_vector)  # Pålagt brus
 x = sin_slow + sin_fast     # Total insignal
 
-t_out, y, _ = signal.lsim(sys, x, time_vector) # Tidsvektor och analog utsignal
+t_out, y= ct.forced_response(H, T=time_vector, U=x)
 
 time_vector_sample = t_out[0::int(f_analog/f_s)]    # Samplad tidsvektor, tar var 100e värde från den "analoga" tidsvektorn
 y_sample = y[0::int(f_analog/f_s)]                  # Samplad utsignal, -//-
@@ -41,8 +43,8 @@ plt.legend()
 
 
 
-Y = fft.fft(y_sample)                  # Filtrerad signal
-#Y = fft.fft(x[0::int(f_analog/f_s)])    # Ej filtrerad signal
+#Y = fft.fft(y_sample)                  # Filtrerad signal
+Y = fft.fft(x[0::int(f_analog/f_s)])    # Ej filtrerad signal
 N = len(Y)
 freqs = fft.fftfreq(N, d=1 / f_s)
 # Endast positiva frekvenser
