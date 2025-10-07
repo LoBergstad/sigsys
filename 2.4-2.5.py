@@ -22,10 +22,10 @@ frequency_fast = 11*1e+3    #Frekvens för brussignalen
 f_analog = f_s*100 # Upplösning på 100ggr sample rate, modell av analog signal
 
 #Tidsvektor och grejer
-periods = 40 #Antal perioder
+periods = 4 #Antal perioder
 T_total = periods / frequency_slow
-time_vector = np.linspace(0, T_total, int(T_total * f_analog))  # Tidsvektor för fyra perioder av den långsamma signalen
-sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen, 4 perioder
+time_vector = np.linspace(0, T_total, int(T_total * f_analog))  # Tidsvektor för den långsamma signalen
+sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen
 sin_fast = np.sin(frequency_fast*2*np.pi*time_vector)  # Pålagt brus
 x = sin_slow + sin_fast     # Total insignal
 
@@ -40,6 +40,7 @@ y_sample = y[0::int(f_analog/f_s)]                  # Samplad utsignal, -//-
 plt.plot(time_vector, x, label = 'x(t)')    # "Analog" insignal
 #plt.plot(time_vector, sin_slow, label = 'Slow Sine')    # "Analog", riktiga signalen
 #plt.plot(time_vector, sin_fast, label = 'Fast Sine')    # "Analog", brussignalen
+plt.plot(time_vector, y, label = 'y(t) (ej filtrerad)')   # Samplad utsignal
 plt.scatter(time_vector_sample, y_sample, label = 'y(t)')   # Samplad utsignal
 plt.legend()
 #plt.show()
