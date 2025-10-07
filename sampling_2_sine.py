@@ -33,8 +33,8 @@ y_sample = y[0::int(f_analog/f_s)]                  # Samplad utsignal, -//-
 
 # Plotta insignal(er) och utsignal
 plt.plot(time_vector, x, label = 'x(t)')    # "Analog" insignal
-plt.plot(time_vector, sin_slow, label = 'Slow Sine')    # "Analog", riktiga signalen
-plt.plot(time_vector, sin_fast, label = 'Fast Sine')    # "Analog", brussignalen
+#plt.plot(time_vector, sin_slow, label = 'Slow Sine')    # "Analog", riktiga signalen
+#plt.plot(time_vector, sin_fast, label = 'Fast Sine')    # "Analog", brussignalen
 plt.scatter(time_vector_sample, y_sample, label = 'y(t)')   # Samplad utsignal
 plt.legend()
 #plt.show()
