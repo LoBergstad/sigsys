@@ -4,7 +4,7 @@ import control as ct
 import matplotlib.pyplot as plt
 
 # --- Värden ---
-f_s = 24000 #Samplefrekvens (hitte på över 16000 enligt Nyqvist)
+f_s = 16000 #Samplefrekvens (hitte på över 16000 enligt Nyqvist)
 g_stop = 20*np.log10(2**(-12)) # Minsta dB reduktionen i stoppbandet, hittar på 10
 
 
