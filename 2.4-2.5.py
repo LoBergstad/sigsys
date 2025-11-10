@@ -22,7 +22,7 @@ frequency_fast = 11*1e+3    #Frekvens för brussignalen
 f_analog = f_s*100 # Upplösning på 100ggr sample rate, modell av analog signal
 
 #Tidsvektor och grejer
-periods = 10 #Antal perioder
+periods = 100 #Antal perioder
 T_total = periods / frequency_slow
 time_vector = np.linspace(0, T_total, int(T_total * f_analog))  # Tidsvektor för den långsamma signalen
 sin_slow = np.sin(frequency_slow*2*np.pi*time_vector)   # Riktiga signalen
